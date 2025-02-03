@@ -1,54 +1,53 @@
-fetch("https://dog.ceo/api/breeds/image/random")
-    .then(data => data.json())
-    .then((res) => {
-        if (res.status !== 'success') {
-            return;
-        }
 
-        // const imgUrl = res.message;
+document.querySelector('.js-btn').addEventListener('click', function() {
+    // Добавляем обработчик события на кнопку с классом .js-btn
 
-        document.querySelector('.js-img').innerHTML = `
-            <img
-                src='${res.message}'
-                width='500'>
-        `;
-    });
+    fetch("https://api.adviceslip.com/advice")
+        // Получаем ответ от API
+        .then(function (response) {
+            // Преобразуем ответ в JSON
+            return response.json();
+        })
+        .then(function (data) {
+            // Записываем совет в элемент с классом .js-text
+            document.querySelector('.js-text').innerHTML = data.slip.advice;
+            // Добавляем класс change-bg к элементу body
+            document.body.classList.add('change-bg');
+        });
+});
 
 
 
+// Комментарии к действиям функции:
 
-// ```javascript
-// fetch("https://dog.ceo/api/breeds/image/random")
-// .then(data => data.json())
-// .then((res) => {
-//     // Проверка статуса ответа
-//     if (res.status !== 'success') {
-//         console.error('Ошибка:', res.message);
-//         return;
-//     }
+// 1. **Добавление обработчика события:**
+//    ```javascript
+//    document.querySelector('.js-btn').addEventListener('click', function() {
+//    ```
+//    - Мы вешаем обработчик события `click` на элемент с классом `.js-btn`.
 
-//     // Извлечение URL изображения
-//     const imgUrl = res.message;
-//     if (!imgUrl) {
-//         console.error('URL изображения не предоставлен в ответе.');
-//         return;
-//     }
+// 2. **Выполнение запроса к API:**
+//    ```javascript
+//    fetch("https://api.adviceslip.com/advice")
+//    ```
+//    - Выполняется асинхронный запрос к указанному URL с помощью метода `fetch`.
 
-//     // Вставка изображения в DOM
-//     document.querySelector('.js-img').innerHTML = `
-//         <img
-//             src='${imgUrl}'
-//             width='500'>
-//     `;
-// })
-// .catch(err => {
-//     console.error('Произошла ошибка при выполнении fetch:', err);
-// });
-// ```
+// 3. **Преобразование ответа в JSON:**
+//    ```javascript
+//    .then(function (response) {
+//        return response.json();
+//    })
+//    ```
+//    - Полученный ответ преобразуется в формат JSON.
 
-// **Пояснения:**
-// 1. **Обработка ошибок**: Добавлена запись ошибок в консоль и проверка наличия `res.message` перед установкой `innerHTML`.
-// 2. **Исправление синтаксиса**: Сравнение строк должно быть с `'success'`, а не `'sucess'`.
-// 3. **Дополнительная обработка ошибок**: Добавлен блок `catch` для обработки возможных ошибок `fetch`.
+// 4. **Обработка данных:**
+//    ```javascript
+//    .then(function (data) {
+//        document.querySelector('.js-text').innerHTML = data.slip.advice;
+//        document.body.classList.add('change-bg');
+//    });
+//    ```
+//    - Извлеченные данные (совет) записываются в элемент с классом `.js-text`.
+//    - К элементу `body` добавляется класс `change-bg`, что может изменить фон страницы или применить другие стили.
 
-// Убедитесь, что в вашем HTML-документе есть элемент с классом `.js-img`, чтобы этот код работал корректно.
+// Теперь код должен корректно выполнять все указанные действия при нажатии на кнопку с классом `.js-btn`.
